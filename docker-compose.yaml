@@ -1,0 +1,10 @@
+version: "3"
+services:
+  feed:
+    image: gellert5225/sc-feed:latest
+    container_name: sc-feed
+    build: .
+    ports:
+      - "5000:3000"
+    environment:
+      - PORT=3000
