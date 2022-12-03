@@ -27,4 +27,4 @@ jobs:
       with:
         context: .
         push: true
-        tags: gellert5225/sc-user-profile:latest
+        tags: gellert5225/sc-feed:latest
