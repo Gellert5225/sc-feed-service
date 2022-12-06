@@ -20,19 +20,21 @@ module.exports = function(app, upload) {
 	});
 
 	app.post('/', async function(req, res) {
-		upload.array('feedImage', 5)(req, res, async (err) => {
+		upload(req, res, async (err) => {
 			if (err) { 
+				console.log('MULTER ERROR 25');
 				return res.status(400).json({ 
 					code: err.code, 
 					info: 'error', 
 					error: err
 				}); 
 			}
-
+			console.log(req.files);
+			console.log(JSON.parse(req.body.body));
 			try {
 				const result = await viewModel.postFeed({ 
 					files: req.files, 
-					body: req.body 
+					body: JSON.parse(req.body.body) 
 				});
 				res.status(201).json({ 
 					code: 200, 

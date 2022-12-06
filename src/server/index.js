@@ -6,17 +6,19 @@ const cookieParser    = require('cookie-parser');
 const db              = require('./db.js');
 const multer          = require('multer');
 const storage         = multer.memoryStorage();
-const upload          = multer({ storage: storage });
+const upload          = multer({ 
+	storage: storage
+ }).any();
 
 const app = express();
 
 require('dotenv').config({ path: `${__dirname }/.env.${process.env.NODE_ENV}` })
 
 var corsOptions = {
-  origin: "*",
-  credentials: true 
+	origin: "*",
+	credentials: true 
 };
-  
+	
 app.use(cors(corsOptions));
 
 app.use(express.urlencoded({extended: true}));
@@ -24,17 +26,17 @@ app.use(express.json());
 app.use(methodOverride('_method'));
 app.use(cookieParser());
 app.use(session({
-  secret: "Shh, its a secret!",
-  saveUninitialized: false,
-  resave: false
+	secret: "Shh, its a secret!",
+	saveUninitialized: false,
+	resave: false
 }));
 
 db.connect().then(result => {
-    require('../app.controller')(app, upload);
+		require('../app.controller')(app, upload);
 });
 
 const port = process.env.PORT || 3001;
 const httpServer = require('http').createServer(app);
 httpServer.listen(port, () => {
-  console.log(`[${process.env.NODE_ENV}] SERVICE: FEED running on port ${port}`);
+	console.log(`[${process.env.NODE_ENV}] SERVICE: FEED running on port ${port}`);
 });
