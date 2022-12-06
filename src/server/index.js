@@ -4,6 +4,9 @@ const cors            = require('cors');
 const session         = require('express-session');
 const cookieParser    = require('cookie-parser');
 const db              = require('./db.js');
+const multer          = require('multer');
+const storage         = multer.memoryStorage();
+const upload          = multer({ storage: storage });
 
 const app = express();
 
@@ -27,7 +30,7 @@ app.use(session({
 }));
 
 db.connect().then(result => {
-    require('../app.controller')(app);
+    require('../app.controller')(app, upload);
 });
 
 const port = process.env.PORT || 3001;
